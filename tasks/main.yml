@@ -6,10 +6,10 @@
   template: src=task.conf.j2 dest={{ supervisor_config_dir }}/{{ name }}.conf
   sudo: yes
 
-- name: update supervisor
-  command: "{{ supervisorctl_command }} update"
+- name: ensure task is present
+  supervisorctl: name={{ name }} state=present
   sudo: yes
 
-- name: restart task {{ name }}
-  command: "{{ supervisorctl_command }} restart {{ name }}:*"
+- name: ensure task is running
+  supervisorctl: name={{ name }} state=restarted
   sudo: yes
